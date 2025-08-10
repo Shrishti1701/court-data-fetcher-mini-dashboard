@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Court Case Lookup</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #0f0f0f;
+    }
+
+    .glow-box {
+      border-radius: 1rem;
+      background: #1a1a1a;
+      box-shadow:
+        0 0 15px rgba(0, 255, 255, 0.2),
+        0 0 30px rgba(0, 255, 255, 0.1),
+        0 0 60px rgba(0, 255, 255, 0.05);
+      transition: box-shadow 0.3s ease-in-out;
+    }
+
+    .glow-box:hover {
+      box-shadow:
+        0 0 20px rgba(0, 255, 255, 0.4),
+        0 0 40px rgba(0, 255, 255, 0.2),
+        0 0 80px rgba(0, 255, 255, 0.1);
+    }
+
+    .glow-text {
+      text-shadow: 0 0 5px #00f7ff, 0 0 10px #00f7ff;
+    }
+
+    .form-animate {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-white">
+
+  <div class="glow-box p-10 w-full max-w-md form-animate">
+    <h1 class="text-2xl font-bold text-center glow-text mb-8">🔍 Court Case Lookup</h1>
+
+    <form action="/" method="POST" class="space-y-6">
+      <div>
+        <label for="case_type" class="block mb-2 text-sm text-cyan-400">Case Type</label>
+        <select name="case_type" id="case_type" required class="w-full p-2 bg-black border border-cyan-500 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white">
+          {% for code, name in case_types %}
+            <option value="{{ code }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div>
+        <label for="case_number" class="block mb-2 text-sm text-cyan-400">Case Number</label>
+        <input type="text" name="case_number" id="case_number" required placeholder="e.g. 123" class="w-full p-2 bg-black border border-cyan-500 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white">
+      </div>
+
+      <div>
+        <label for="filing_year" class="block mb-2 text-sm text-cyan-400">Filing Year</label>
+        <input type="text" name="filing_year" id="filing_year" required placeholder="e.g. 2020" class="w-full p-2 bg-black border border-cyan-500 rounded focus:outline-none focus:ring-2 focus:ring-cyan-400 text-white">
+      </div>
+
+      <div class="text-center">
+        <button type="submit" class="px-6 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-semibold rounded-lg transition duration-200 shadow-lg">
+          🔎 Fetch Case Details
+        </button>
+      </div>
+    </form>
+  </div>
+
+</body>
+</html>
+
+
+
+

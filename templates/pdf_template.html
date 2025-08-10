@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Summary</title>
+    <style>
+        @page {
+            margin: 50px 40px;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 14px;
+            color: #000;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #003366;
+            padding-bottom: 10px;
+        }
+        header img {
+            height: 60px;
+            margin-bottom: 10px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 22px;
+            color: #003366;
+        }
+        h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #003366;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .field {
+            margin: 4px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 8px;
+        }
+        th, td {
+            border: 1px solid #888;
+            padding: 8px;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        footer {
+            position: fixed;
+            bottom: 10px;
+            left: 40px;
+            right: 40px;
+            font-size: 10px;
+            color: #888;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Court Case Summary</h1>
+</header>
+
+<div class="section">
+    <h2>Case Details</h2>
+    <div class="field"><strong>Case Number:</strong> {{ case_data.case_number }}</div>
+    <div class="field"><strong>Petitioner:</strong> {{ case_data.petitioner }}</div>
+    <div class="field"><strong>Respondent:</strong> {{ case_data.respondent }}</div>
+    <div class="field"><strong>Filing Date:</strong> {{ case_data.filing_date }}</div>
+</div>
+
+{% if case_data.acts %}
+<div class="section">
+    <h2>Acts Involved</h2>
+    <ul>
+        {% for act in case_data.acts %}
+        <li>{{ act }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+
+{% if case_data.orders %}
+<div class="section">
+    <h2>Final Orders / Judgments</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Type</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in case_data.orders %}
+            <tr>
+                <td>{{ order.date }}</td>
+                <td>{{ order.type }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+{% if case_data.history %}
+<div class="section">
+    <h2>Case History</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Hearing Info</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entry in case_data.history %}
+            <tr>
+                <td>{{ entry }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<footer>
+  <p style="text-align: center;">Page {{ page_number }} | Generated on: {{ generated_on }}</p>
+</footer>
+
+</body>
+</html>

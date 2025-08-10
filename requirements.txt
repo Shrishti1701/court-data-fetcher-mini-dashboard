@@ -1,0 +1,20 @@
+# Flask web framework to create routes and handle web requests/responses
+Flask==2.3.3
+
+# Selenium for browser automation (used to handle JavaScript-rendered PDF download buttons)
+selenium==4.21.0
+
+# BeautifulSoup4 for parsing and extracting data from HTML (used in your scraper)
+beautifulsoup4==4.12.3
+
+# Requests library for making HTTP requests (used to download PDF files and interact with court portals)
+requests==2.31.0
+
+# pdfkit for converting HTML templates into PDF (used in generate_pdf route)
+pdfkit==1.0.0
+
+# Jinja2 templating engine (already included with Flask, but explicitly listed for compatibility/version control)
+Jinja2==3
+
+# Webdriver Manager to automatically download the correct version of ChromeDriver for Selenium
+webdriver-manager==4.0.1

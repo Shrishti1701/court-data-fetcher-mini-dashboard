@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Case Result</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: #0f0f0f;
+            color: #e0e0e0;
+            font-family: 'Inter', sans-serif;
+        }
+        .glow-card {
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2), 0 0 60px rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        .neon-button {
+            background: #00f5ff;
+            color: #000;
+            font-weight: 600;
+            box-shadow: 0 0 10px #00f5ff, 0 0 40px #00f5ff;
+            transition: all 0.3s ease-in-out;
+        }
+        .neon-button:hover {
+            background: #0ff;
+            box-shadow: 0 0 20px #00f5ff, 0 0 80px #00f5ff;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-8">
+    <h1 class="text-4xl font-bold mb-8 text-cyan-300 tracking-wider">⚖️ Case Details</h1>
+
+    {% if error %}
+        <div class="text-red-500 text-lg font-semibold">{{ error }}</div>
+    {% endif %}
+
+    {% if case_data %}
+    <div class="glow-card p-6 rounded-2xl w-full max-w-4xl space-y-6">
+        
+            <!-- 🟦 Case Details Table -->
+<div class="overflow-x-auto mt-8">
+  <table class="min-w-full text-sm text-left text-white bg-[#111827] border border-cyan-500">
+    <tbody class="text-cyan-300">
+      <tr class="border-b border-cyan-800">
+        <th scope="row" class="px-6 py-3 font-bold">Case Type</th>
+        <td class="px-6 py-3">{{ case_data.case_type }}</td>
+      </tr>
+      <tr class="border-b border-cyan-800">
+        <th scope="row" class="px-6 py-3 font-bold">Case Number</th>
+        <td class="px-6 py-3">{{ case_data.case_number }}</td>
+      </tr>
+      <tr class="border-b border-cyan-800">
+        <th scope="row" class="px-6 py-3 font-bold">Filing Year</th>
+        <td class="px-6 py-3">{{ case_data.filing_year }}</td>
+      </tr>
+      <tr class="border-b border-cyan-800">
+        <th scope="row" class="px-6 py-3 font-bold">Filing Date</th>
+        <td class="px-6 py-3">{{ case_data.filing_date }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+            <!-- Petitioner and Respondent -->
+{% if case_data.petitioner or case_data.respondent %}
+<div class="mt-4 text-sm text-cyan-300">
+  <table class="min-w-full text-left text-white bg-[#111827] border border-cyan-500">
+    <tbody class="text-cyan-300">
+      {% if case_data.petitioner %}
+      <tr class="border-b border-cyan-800">
+        <th class="px-6 py-3 font-bold">Petitioner</th>
+        <td class="px-6 py-3">{{ case_data.petitioner }}</td>
+      </tr>
+      {% endif %}
+      {% if case_data.respondent %}
+      <tr>
+        <th class="px-6 py-3 font-bold">Respondent</th>
+        <td class="px-6 py-3">{{ case_data.respondent }}</td>
+      </tr>
+      {% endif %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+    {% if case_data.acts %}
+    <div class="mt-6">
+        <h2 class="text-cyan-400 font-semibold mb-2 text-lg">📘 Acts Involved</h2>
+        <ul class="list-disc ml-6 text-white">
+            {% for act in case_data.acts %}
+            <li>{{ act }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+    
+<!-- Interim Orders -->
+{% if interim_orders %}
+<div class="mt-6">
+    <h2 class="text-xl font-bold text-cyan-400 mb-2">Interim Orders</h2>
+    <table class="w-full border border-cyan-600 text-sm text-white">
+        <thead>
+            <tr class="bg-cyan-800 text-white">
+                <th class="px-4 py-2">Order</th>
+                <th class="px-4 py-2">Date</th>
+                <th class="px-4 py-2">Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in interim_orders %}
+            <tr class="bg-cyan-900 hover:bg-cyan-700">
+                <td class="px-4 py-2">{{ order.order_number }}</td>
+                <td class="px-4 py-2">{{ order.order_date }}</td>
+                <td class="px-4 py-2">
+                    <a href="{{ url_for('view_pdf') }}?url={{ order.order_link | urlencode }}"
+                       class="text-green-400 underline">
+                        COPY OF ORDER
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+<!-- Final Orders / Judgments -->
+{% if final_orders %}
+<div class="mt-8">
+    <h2 class="text-xl font-bold text-cyan-400 mb-2">Final Orders / Judgments</h2>
+    <table class="w-full border border-cyan-600 text-sm text-white">
+        <thead>
+            <tr class="bg-cyan-800 text-white">
+                <th class="px-4 py-2">Order</th>
+                <th class="px-4 py-2">Date</th>
+                <th class="px-4 py-2">Download</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in final_orders %}
+            <tr class="bg-cyan-900 hover:bg-cyan-700">
+                <td class="px-4 py-2">{{ order.order_number }}</td>
+                <td class="px-4 py-2">{{ order.order_date }}</td>
+                <td class="px-4 py-2">
+                    <a href="{{ url_for('view_pdf') }}?url={{ order.order_link | urlencode }}"
+                       class="text-green-400 underline">
+                        COPY OF ORDER
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endif %}
+
+        <!-- Case History -->
+        {% if case_data.history %}
+        <div class="mt-8">
+            <h2 class="text-cyan-400 font-semibold mb-2 text-lg">📜 Case History</h2>
+            <ul class="list-disc ml-6 text-white">
+                {% for h in case_data.history %}
+                <li>{{ h }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+       <a href="{{ url_for('generate_pdf') }}"
+   role="button"
+   aria-label="Download Summary as PDF"
+   class="mt-8 px-6 py-3 rounded-full neon-button hover:scale-105 transform transition duration-300 inline-block text-white bg-blue-600 hover:bg-blue-700 text-center"
+   target="_blank">
+   💾 Download Summary as PDF
+</a>
+
+        {% else %}
+        <p class="text-red-400 mt-4">No case data found. Please go back and search again.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
