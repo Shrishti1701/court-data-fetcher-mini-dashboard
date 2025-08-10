@@ -12,6 +12,17 @@ It supports:
 - Displaying **orders/judgments** in multiple categories (Interim, Final, History, etc.)
 - **Downloading Result page as a PDF** 
 
+### Project Structure
+court-data-fetcher/
+│
+├── app.py                # Flask entry point
+├── scraper.py            # Main scraping & PDF proxy logic
+├── models.py             # Data models / helper classes
+├── templates/            # HTML templates (form, result, pdf_templates)
+├── requirements.txt      # Dependencies
+├── .gitignore            # Git ignore file
+└── README.md             # Documentation
+
 ---
 
 ## 🛠️ Setup Steps
@@ -34,7 +45,17 @@ venv\Scripts\activate          # Windows
 pip install -r requirements.txt
 ```
 
-4️⃣ Set up environment variables
+4️⃣ Run the Flask app
+```
+python app.py
+```
+
+5️⃣ Access in browser
+```
+http://127.0.0.1:5000
+```
+
+### Set up environment variables
 Create a .env file in the project root with:
 # Flask settings
 FLASK_APP=app.py
@@ -61,16 +82,23 @@ Search Form (form.html) – Enter case details and CAPTCHA (if prompted).
 Backend Scraper (scraper.py) – Uses requests + BeautifulSoup to fetch and parse court data
 Results Dashboard (result.html) – Displays metadata and order/judgment links in categorized tables.
 
-### Project Structure
-court-data-fetcher/
-│
-├── app.py                # Flask entry point
-├── scraper.py            # Main scraping & PDF proxy logic
-├── models.py             # Data models / helper classes
-├── templates/            # HTML templates (form, result, pdf_templates)
-├── requirements.txt      # Dependencies
-├── .gitignore            # Git ignore file
-└── README.md             # Documentation
+### Important – Selenium Step
+1.When you perform a search, Selenium will open a browser window to load the court case details.
+2.Wait until the case data is fully loaded in the Selenium window.
+3.Then return to the terminal and press Enter — this will trigger the script to parse the loaded data and redirect you to the results page where the dashboard is generated.
 
+### Screenshots
+Example Case 1:
+Case Type: CS - Civil Suit
+Case Number: 121
+Filing Year: 2021
 
+Example Case 2:
+Case Type: CA - Civil Appeal
+Case Number: 121
+Filing Year: 2021
 
+<img width="919" height="834" alt="image" src="https://github.com/user-attachments/assets/8e10b960-a161-4c47-8d92-88973bdf59d6" /> 
+<img width="843" height="875" alt="image" src="https://github.com/user-attachments/assets/f495e681-3228-4074-822e-57301863a1c1" /> 
+<img width="837" height="805" alt="image" src="https://github.com/user-attachments/assets/3e3aaa9b-3de5-4ad4-ab51-591b9effd3b5" /> 
+<img width="738" height="797" alt="image" src="https://github.com/user-attachments/assets/0ec2e197-dd25-47fe-b5da-1a0ceb2e08ce" />
