@@ -1,6 +1,6 @@
 # Court Data Fetcher & Mini-Dashboard
 
-![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg)
+![Python Version](https://img.shields.io/badge/python-3.9+-blue.svg)
 ![License](https://img.shields.io/github/license/Shrishti1701/court-data-fetcher-mini-dashboard)
 ![Repo Size](https://img.shields.io/github/repo-size/Shrishti1701/court-data-fetcher-mini-dashboard)
 
