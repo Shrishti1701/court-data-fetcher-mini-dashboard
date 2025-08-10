@@ -3,9 +3,6 @@
 ![Python Version](https://img.shields.io/badge/python-3.12+-blue.svg)
 ![License](https://img.shields.io/github/license/Shrishti1701/court-data-fetcher-mini-dashboard)
 ![Repo Size](https://img.shields.io/github/repo-size/Shrishti1701/court-data-fetcher-mini-dashboard)
-![Last Commit](https://img.shields.io/github/last-commit/Shrishti1701/court-data-fetcher-mini-dashboard)
-![GitHub Stars](https://img.shields.io/github/stars/Shrishti1701/court-data-fetcher-mini-dashboard?style=social)
-
 
 A **Flask-based web application** that fetches live case data, orders, and judgments from the **Faridabad District Court eCourts portal**.  
 It provides a searchable dashboard to view case metadata, order history, and download PDF copies of orders/judgments — even when they are embedded in JavaScript-based PDF viewers.
